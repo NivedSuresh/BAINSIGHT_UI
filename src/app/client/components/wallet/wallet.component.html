@@ -1,0 +1,52 @@
+<mat-card style="background-color: #181717; color: #ccc4c4">
+  <div class="flex justify-content-evenly pt-3">
+    <h3 class="pb-2">CUR: {{availableBalance() == null || availableBalance() == 0 ? '🚫' : '₹' + availableBalance()}}</h3>
+    <h3 class="pb-2">AVL: {{withdrawableBalance() == null ? '🚫' : '₹' + withdrawableBalance()}}</h3>
+  </div>
+</mat-card>
+
+<mat-card-title>
+  <h3 class="mt-8" style="text-align: center">Transactions</h3>
+</mat-card-title>
+<div style="width: 100%;" class="flex justify-content-center">
+  <mat-card-content style="width: 80%" *ngIf="transactions().transactions.length > 0; else noTransactions">
+    <table mat-table [dataSource]="transactions().transactions" style="background-color: #181717;">
+
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Transaction Type">
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Transaction Type </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.walletTransactionType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Amount">
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Amount </th>
+        <td style="text-align: center"
+            [ngStyle]="{'color': element.amount < 0 ? 'red' : 'green'}"
+            mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Timestamp">
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Timestamp </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.timestamp | date:'yyyy-MM-dd HH:mm'}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </mat-card-content>
+
+  <ng-template #noTransactions>
+    <div style="height: 80vh;" class="flex justify-content-center align-items-center">
+      <h2 style="text-align: center">No Transactions.</h2>
+    </div>
+  </ng-template>
+</div>
+<div class="flex justify-content-center mr-5 mt-2 mb-2">
+  <small (click)="fetchPage(this.page().page - 1)" style="cursor: pointer" *ngIf="transactions().page?.prev">prev</small>
+  <small (click)="fetchPage(this.page().page + 1)" class="ml-2" style="cursor: pointer" *ngIf="transactions().page?.next">next</small>
+</div>

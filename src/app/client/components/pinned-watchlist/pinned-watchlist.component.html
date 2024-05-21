@@ -1,0 +1,50 @@
+<h3 class="mt-5 flex justify-content-center">{{ watchlistDto().watchlistName }}</h3>
+
+<div class="container responsive-grid" style="cursor: pointer">
+  <mat-card
+    *ngFor="let stick of watchlistDto().sticks"
+    class="m-2"
+    style="width:100%; background-color: #1f1d1d"
+    (click)="routeToHistory(stick.symbol)"
+  >
+
+    <mat-card-header>
+      <mat-card-title style="color: #757171">{{ stick.symbol }}</mat-card-title>
+    </mat-card-header>
+
+    <br>
+    <br>
+
+    <mat-card-content class="flex justify-content-between">
+
+      <mat-card-subtitle>
+        Low: ₹{{ stick.low }}
+      </mat-card-subtitle>
+
+      <mat-card-subtitle
+        [ngStyle]="{'color': stick.change < 0.0 ? '#7e1818' : '#247024'}"
+      >
+        ({{ stick.change }}%)
+      </mat-card-subtitle>
+
+    </mat-card-content>
+
+    <br>
+
+    <mat-card-content class="flex justify-content-between">
+      <mat-card-subtitle
+        *ngFor="let ex of stick.exchangePrices"
+      >
+        {{ ex.exchange }}: ₹{{ ex.lastTradedPrice }}
+      </mat-card-subtitle>
+    </mat-card-content>
+
+    <br>
+  </mat-card>
+
+</div>
+
+<div class="flex justify-content-end mr-5">
+  <small (click)="fetchPage(watchlistDto().bainsightPage.page - 1)" style="cursor: pointer" *ngIf="watchlistDto().bainsightPage?.prev">prev</small>
+  <small (click)="fetchPage(watchlistDto().bainsightPage.page + 1)" class="ml-2" style="cursor: pointer" *ngIf="watchlistDto().bainsightPage?.next">next</small>
+</div>

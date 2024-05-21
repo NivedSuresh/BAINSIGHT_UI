@@ -1,0 +1,7 @@
+.active-link {
+  background-color: #363635;
+}
+
+:host * {
+  transition: all 500ms ease-in-out
+}

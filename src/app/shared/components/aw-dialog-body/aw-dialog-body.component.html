@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <header class="flex justify-content-center">
+    <h3>ADD SYMBOL</h3>
+  </header>
+
+  <mat-form-field class="flex justify-content-center">
+    <input [(ngModel)]="symbol" matInput placeholder="Watchlist Name">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex justify-content-center">
+  <button mat-dialog-close (click)="onAdd()" mat-raised-button>Save</button>
+  <button mat-dialog-close mat-raised-button>Cancel</button>
+</mat-dialog-actions>

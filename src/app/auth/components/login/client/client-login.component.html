@@ -1,0 +1,57 @@
+<div style="height:100%; margin-top: 10%" class="flex justify-content-center">
+  <form [formGroup]="loginForm" class="">
+    <p-card header="SIGN IN" [style]=" {width: '360px', background: '#181717'} ">
+      <div class="field">
+        <label>Phone Number</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="identifier"
+          class="w-full"
+          name="email"
+          placeholder="Enter your Phone Number"
+        >
+
+
+        <small
+          *ngIf="identifierError.touched && (identifierError.dirty || identifierError.invalid)"
+          class="block p-error"
+        >
+          <div *ngIf="identifierError.errors?.['minlength']"> ' An Indian Phone Number should contain exactly 10 numbers excluding country code ' </div>
+          <div *ngIf="identifierError.errors?.['required']"> ' Phone Number is required ' </div>
+        </small>
+
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input
+          type="password"
+          pPassword
+          formControlName="password"
+          class="w-full"
+          name="password"
+          placeholder="Enter your password"
+        >
+
+        <small
+          *ngIf="passwordError.touched  && (passwordError.dirty || passwordError.invalid)"
+          class="block p-error"
+        >
+          <div *ngIf="passwordError.errors?.['required']">' Password is required '</div>
+          <div *ngIf="passwordError.errors?.['minlength']"> ' Password should be of minimum 5 characters ' </div>
+        </small>
+
+      </div>
+      <p-button
+        label="SIGN IN"
+        styleClass="w-full"
+        [style]="{background: '#181717'}"
+        (onClick)="onLogin()"
+        [disabled]="loginForm.invalid"
+      ></p-button>
+      <div class="mt-3">
+        Not a member? <a routerLink="/auth/signup">Sign Up</a>
+      </div>
+    </p-card>
+  </form>
+</div>

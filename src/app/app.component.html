@@ -1,0 +1,31 @@
+<div>
+  <mat-toolbar class="mat-elevation-z3 flex justify-content-between">
+    <button mat-icon-button (click)="sidebarCollapsed.set(!sidebarCollapsed())">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a mat-button
+      *ngIf="isAuthenticated"
+      style="font-size: 15px; margin-right: 10px; color: #9b1e1e"
+       (click)="logout()"
+    >
+      {{'Logout'}}
+    </a>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+
+    <mat-sidenav opened mode="side" [style.width]="sidenavWidth()" style="background-color: #131313">
+      <custom-sidenav [sidebarCollapsed] = sidebarCollapsed()></custom-sidenav>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()" style="background-color: #131313">
+      <router-outlet />
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</div>
+
+
+
+

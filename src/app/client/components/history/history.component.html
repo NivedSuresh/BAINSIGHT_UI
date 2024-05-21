@@ -1,0 +1,44 @@
+<div>
+  <dx-chart id="chart"
+            [title]="symbol + price"
+            [dataSource]="candles"
+  >
+
+    <dxi-series [name]="symbol" openValueField="open" highValueField="high" lowValueField="low" closeValueField="close">
+      <dxo-reduction color="red"></dxo-reduction>
+    </dxi-series>
+
+    <dxo-common-series-settings argumentField="timeStamp" type="candlestick">
+    </dxo-common-series-settings>
+
+    <dxo-legend itemTextPosition="left"></dxo-legend>
+
+    <dxi-value-axis [tickInterval]="1">
+      <dxo-title> {{symbol}} </dxo-title>
+      <dxo-label>
+        <dxo-format type="currency" [precision]="0"></dxo-format>
+      </dxo-label>
+    </dxi-value-axis>
+
+    <dxo-argument-axis [workdaysOnly]="true">
+      <dxo-label format="shortDate"></dxo-label>
+    </dxo-argument-axis>
+
+    <dxo-export [enabled]="true"></dxo-export>
+    <dxo-tooltip [enabled]="true" location="edge" [customizeNodeTooltip]="customizeToolTip"></dxo-tooltip>
+  </dx-chart>
+  <mat-button-toggle-group class="flex justify-content-between mt-3">
+    <div>
+      <a mat-button (click)="fetchHistoryForTimeSpace('1D')">1D</a>
+      <a mat-button (click)="fetchHistoryForTimeSpace('1W')">1W</a>
+      <a mat-button (click)="fetchHistoryForTimeSpace('1M')">1M</a>
+      <a mat-button (click)="fetchHistoryForTimeSpace('1Y')">1Y</a>
+      <a mat-button (click)="fetchHistoryForTimeSpace('3Y')">3Y</a>
+    </div>
+    <div class="flex justify-content-end mr-7">
+      <a style="background-color: green" mat-button (click)="onBuy()">BUY</a>
+    </div>
+  </mat-button-toggle-group>
+</div>
+
+

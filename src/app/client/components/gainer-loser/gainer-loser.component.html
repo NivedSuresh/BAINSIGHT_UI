@@ -1,0 +1,36 @@
+
+<small style="color:#a19a9a; font-size: 8px" class="p-2 flex justify-content-end">
+  *Market prices change very often,
+  the data represented here was a snapshot taken on date.*
+</small>
+<div class="slider-container responsive-grid flex justify-content-evenly" style="width: 95%">
+
+  <div class="slider-item" *ngFor="let stick of lgs()">
+
+    <mat-card
+      class="card"
+      style="background-color: #171616; width: max-content"
+      (click)="routeToHistory(stick.symbol)"
+    >
+      <mat-card-content class="card-content mt-3 p-5">
+        <div class="content-wrapper">
+          <div class="grid justify-content-evenly">
+            <img
+              class="m-2"
+              [ngStyle]="{ 'height': '20px', 'margin-top': '2px' }"
+              [src]="stick.change < 0  ? 'assets/down.png' : 'assets/up.png'"
+              alt=""
+              fill
+            >
+            <p class="m-2" style="color: #e1dddd">{{stick.symbol}}</p>
+            <p class="m-2"  style="color: #e1dddd">₹{{stick.low}}</p>
+            <p class="m-2" [style.color]="stick.change < 0 ? 'red' : 'green'">₹{{stick.change}}</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+<hr class="mt-5">
+

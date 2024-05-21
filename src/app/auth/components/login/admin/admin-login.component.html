@@ -1,0 +1,55 @@
+
+<div style="height:100%; margin-top: 10%" class="flex justify-content-center">
+  <form [formGroup]="loginForm" class="">
+    <p-card header="Login" [style]=" {width: '360px', background: '#181717'} ">
+      <div class="field">
+        <label>Email</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="identifier"
+          class="w-full"
+          name="email"
+          placeholder="Enter your email"
+        >
+
+        <small
+          *ngIf="identifierError.touched && (identifierError.dirty || identifierError.invalid)"
+          class="block p-error"
+        >
+          <div *ngIf="identifierError.errors?.['email']"> ' The user identifier is invalid, please enter a valid email address ' </div>
+          <div *ngIf="identifierError.errors?.['required']"> ' Email address is required ' </div>
+        </small>
+
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input
+          type="password"
+          pPassword
+          formControlName="password"
+          class="w-full"
+          name="password"
+          placeholder="Enter your password"
+        >
+
+        <small
+          *ngIf="passwordError.touched  && (passwordError.dirty || passwordError.invalid)"
+          class="block p-error"
+        >
+          <div *ngIf="passwordError.errors?.['required']">' Password is required '</div>
+          <div *ngIf="passwordError.errors?.['minlength']"> ' Password should be of minimum 5 characters ' </div>
+        </small>
+
+      </div>
+      <p-button
+        label="SIGN IN"
+        styleClass="w-full"
+        [style]="{background: '#181717'}"
+        (onClick)="onLogin()"
+        [disabled]="loginForm.invalid"
+      ></p-button>
+
+    </p-card>
+  </form>
+</div>

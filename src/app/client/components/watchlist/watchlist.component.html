@@ -1,0 +1,94 @@
+
+
+<div class="flex justify-content-between">
+  <form>
+    <mat-form-field>
+      <mat-label>{{ watchlistDto().watchlistName }}</mat-label>
+      <mat-select (selectionChange)="switchWatchlist($event.value)">
+        <mat-option *ngFor="let tag of tags()" [value]="tag">{{ tag }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+
+  <div class="flex justify-content-end">
+
+    <a mat-raised-button class="cursor-pointer m-1"
+       (click)="onCreateWatchlist()"
+    >
+      Create a watchlist +
+    </a>
+    <a
+      *ngIf="watchlistDto().watchlistName"
+      mat-raised-button class="cursor-pointer m-1"
+      (click)="onAddToWatchlist()"
+    >
+      Add to list +
+    </a>
+  </div>
+
+</div>
+
+
+
+<!--<mat-card-header class="mb-2 flex justify-content-center">-->
+<!--  Tag: {{ watchlistDto().watchlistName }}-->
+<!--</mat-card-header>-->
+<mat-card style="background-color: #181717" *ngIf=" watchlistDto().sticks && watchlistDto().sticks.length > 0">
+
+  <mat-card-content>
+    <table mat-table [dataSource]="datasource()" style="background-color: #181717">
+
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+        <td
+          mat-cell *matCellDef="let element"
+          (click)="routeToHistory(element.symbol)"
+        >
+          {{element.symbol}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="low">
+        <th mat-header-cell *matHeaderCellDef> Low </th>
+        <td mat-cell *matCellDef="let element"> {{element.low}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="high">
+        <th mat-header-cell *matHeaderCellDef> High </th>
+        <td mat-cell *matCellDef="let element"> {{element.high}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="open">
+        <th mat-header-cell *matHeaderCellDef> Open </th>
+        <td mat-cell *matCellDef="let element"> {{element.open}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="close">
+        <th mat-header-cell *matHeaderCellDef> Close </th>
+        <td mat-cell *matCellDef="let element"> {{element.close}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="volume">
+        <th mat-header-cell *matHeaderCellDef> Volume </th>
+        <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="change">
+        <th mat-header-cell *matHeaderCellDef> Change </th>
+        <td mat-cell *matCellDef="let element"> {{element.change}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </mat-card-content>
+</mat-card>
+
+<div class="flex justify-content-end mr-5">
+  <small (click)="fetchPage(watchlistDto().bainsightPage.page - 1)" style="cursor: pointer" *ngIf="watchlistDto()?.bainsightPage?.prev">prev</small>
+  <small (click)="fetchPage(watchlistDto().bainsightPage.page + 1)" class="ml-2" style="cursor: pointer" *ngIf="watchlistDto()?.bainsightPage?.next">next</small>
+</div>
+
+

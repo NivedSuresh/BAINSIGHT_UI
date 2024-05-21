@@ -1,0 +1,60 @@
+<div style="width: 20vw">
+
+  <div mat-card-title>
+    <h2 style="color: #c2bdbd;" class="flex justify-content-center mt-2">
+      {{this.data.symbol}}
+    </h2>
+  </div>
+
+  <form [formGroup]="orderForm" >
+    <div mat-dialog-content class="grid">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Quantity
+          </mat-label>
+          <input matInput type="number" formControlName="quantity">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-radio-group formControlName="exchange" class="grid">
+          @for (exp of historyService.getStick.exchangePrices; track exp){
+            <mat-radio-button  [value]="exp?.exchange">{{exp.exchange + ': ' + exp?.lastTradedPrice}}</mat-radio-button>
+          }
+        </mat-radio-group>
+      </div>
+
+      <mat-form-field class="mt-3" appearance="outline">
+        <mat-label>Order Type</mat-label>
+        <mat-select formControlName="orderType">
+          <mat-option>--</mat-option>
+          @for (orderType of orderTypes; track orderType) {
+            <mat-option [value]="'ORDER_TYPE_'.concat(orderType)">{{orderType}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if(this.orderForm.getRawValue().orderType === 'ORDER_TYPE_LIMIT'){
+        <div>
+          <mat-form-field appearance="outline" >
+            <mat-label>
+              Price
+            </mat-label>
+            <input matInput [type]="'number'" formControlName="price">
+          </mat-form-field>
+        </div>
+      }
+
+    </div>
+  </form>
+
+  <div mat-dialog-actions class="flex justify-content-center">
+    <button mat-raised-button mat-dialog-close >Cancel</button>
+    <button mat-dialog-close [disabled]="orderForm.invalid" mat-raised-button style="background-color: #0b570b"
+    (click)="placeOrder()"
+    >
+      Place
+    </button>
+  </div>
+</div>

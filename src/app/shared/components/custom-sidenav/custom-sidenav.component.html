@@ -1,0 +1,36 @@
+<div>
+  <div class="grid justify-content-center mt-5" style="cursor: pointer">
+    <img (click)="routeToHome()"
+         src="/assets/logo6.jpeg"
+         [style.height]="logoSize()"
+         [style.width]="logoSize()"
+         alt="logo"
+         style="border-radius: 100%;">
+  </div>
+
+  <mat-nav-list
+  >
+    <a class="mt-4"
+       mat-list-item
+       *ngFor="let item of menuItems()"
+       [routerLink]="item.route"
+       routerLinkActive="selected-menu-item"
+       [ngClass]="{ 'active-link': rla.isActive }"
+       #rla="routerLinkActive"
+    >
+
+      <mat-icon
+        matListItemIcon
+        style="color: #757171"
+        [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+      >
+        {{item.icon}}
+      </mat-icon>
+
+      <span *ngIf="!sidenavCollapsed()" style="color: #757171">
+        {{item.label}}
+      </span>
+    </a>
+  </mat-nav-list>
+
+</div>
