@@ -6,4 +6,4 @@ export const URI = "https://lusso.college/api/bainsight";
 
 export const WATCHLIST_URI = "https://lusso.college/api/bainsight/watchlist"
 
-export const SOCKET_URI = "wss://lusso.college/ws";
+export const SOCKET_URI = "ws://lusso.college/ws";
