@@ -16,7 +16,7 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   req = req.clone({headers: new HttpHeaders().set('x-auth-user-id', '7d5367d1-1fee-4c54-9622-19e13f770a93')})
 
-  console.log(req.headers);
+  console.log("With Credentials: " + req.withCredentials);
 
   if(req.url.endsWith("/auth/refresh")){
     return next(req);
