@@ -1,4 +1,4 @@
-import {Component, computed, inject, Signal} from '@angular/core';
+import {Component, computed, inject, OnDestroy, Signal} from '@angular/core';
 import {watchlistStore} from "../../store/home/watchlist.store";
 import {
   MatCell,
@@ -61,7 +61,7 @@ import {HistoryService} from "../../services/history/history.service";
   templateUrl: './watchlist.component.html',
   styleUrl: './watchlist.component.css'
 })
-export class WatchlistComponent {
+export class WatchlistComponent implements OnDestroy{
 
   private stompService: StompService;
   watchlistDto: Signal<WatchlistDto>;
@@ -91,6 +91,9 @@ export class WatchlistComponent {
     this.tags = computed(() => this.watchlistStore.tags());
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribeAll();
+  }
 
 
   async fetchPage(page: number){
@@ -122,4 +125,9 @@ export class WatchlistComponent {
     this.historyService.route(symbol, "1D");
   }
 
+
+  private unsubscribeAll() {
+    this.stompService.unsubscribeAll();
+    this.watchlistStore.emptySticks();
+  }
 }
