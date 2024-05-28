@@ -30,26 +30,22 @@ export interface LoserGainer {
   templateUrl: './gainer-loser.component.html',
   styleUrl: './gainer-loser.component.css'
 })
-export class GainerLoserComponent implements OnInit{
-
-
+export class GainerLoserComponent implements OnInit
+{
 
   lgs : WritableSignal<CandleStick[]> = signal([]);
 
+  constructor(private historyService: HistoryService) {}
 
 
-  constructor(
-    private historyService: HistoryService
-  )
-  {}
-
-  async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void>
+  {
     const lgs = await this.historyService.fetchLosersAndGainersForTheDay();
     this.lgs.set(lgs);
   }
 
-
-  routeToHistory(symbol: string) {
+  routeToHistory(symbol: string)
+  {
     this.historyService.route(symbol, "1D");
   }
 }

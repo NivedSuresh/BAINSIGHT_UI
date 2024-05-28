@@ -16,6 +16,7 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatButton} from "@angular/material/button";
 import {WatchlistDto} from "../../../shared/models/watchlist.model";
 import {HistoryService} from "../../services/history/history.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -46,7 +47,7 @@ export class PinnedWatchlistComponent implements OnInit, OnDestroy{
 
   watchlistDto: Signal<WatchlistDto> = computed(() => this.watchlistStore.watchlistDto());
 
-  constructor(private historyService: HistoryService) {
+  constructor(private historyService: HistoryService, private route: Router) {
     this.stompService = rxStompServiceFactory();
     this.watchlistDto = computed(() => {
       const watchlistDto = this.watchlistStore.watchlistDto();
@@ -81,5 +82,9 @@ export class PinnedWatchlistComponent implements OnInit, OnDestroy{
 
   routeToHistory(symbol: string) {
     this.historyService.route(symbol, "1D");
+  }
+
+  routeToWatchlist() {
+    this.route.navigateByUrl("watchlist").then();
   }
 }

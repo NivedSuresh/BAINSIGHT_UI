@@ -6,34 +6,37 @@ import {WatchlistComponent} from "../components/watchlist/watchlist.component";
 import {WalletComponent} from "../components/wallet/wallet.component";
 import {HistoryComponent} from "../components/history/history.component";
 import {OrderComponent} from "../components/order-persistence/order.component";
+import {canActivateGuard} from "../../app.routes";
 
 export const clientRoutes: Route[] = [
   {
     path: '',
-    component: ClientDashboardComponent
+    component: ClientDashboardComponent,
+    canActivate: [canActivateGuard]
   },
   {
     path: 'portfolio',
-    component: PortfolioComponent
+    component: PortfolioComponent,
+    canActivate: [canActivateGuard]
   },
   {
     path: 'watchlist',
-    component: WatchlistComponent
+    component: WatchlistComponent,
+    canActivate: [canActivateGuard]
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [canActivateGuard]
   },
   {
     path: 'wallet',
-    component: WalletComponent
+    component: WalletComponent,
+    canActivate: [canActivateGuard]
   },
   {
     path: 'orders',
-    component: OrderComponent
+    component: OrderComponent,
+    canActivate: [canActivateGuard]
   }
-  // {
-  //   path: 'history/:symbol/:timeSpace',
-  //   component: HistoryComponent
-  // }
 ]
