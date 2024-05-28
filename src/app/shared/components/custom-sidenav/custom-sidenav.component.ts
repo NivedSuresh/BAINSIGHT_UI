@@ -76,6 +76,6 @@ export class CustomSidenavComponent {
 
   /* TODO: Make sure either ucc/email exists all the time in the store */
   routeToHome() {
-    (this.authStore.ucc()) ? this.router.navigateByUrl("/admin") : this.router.navigateByUrl("");
+    this.router.navigateByUrl("").then();
   }
 }
