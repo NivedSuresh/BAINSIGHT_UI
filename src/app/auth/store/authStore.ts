@@ -38,7 +38,8 @@ export const authStore =
       }},
 
       async onLogout(){
-        try{
+        try
+        {
           await authService.logoutUser();
           patchState(store, {isAuthenticated:false, email: ''});
           toastrService.info("You've been logged out");

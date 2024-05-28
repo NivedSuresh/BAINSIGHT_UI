@@ -8,11 +8,13 @@ export const canActivateGuard :CanActivateFn = (route, state) => {
   const toastrService = inject(ToastrService);
   const router = inject(Router);
 
-
   const role = localStorage.getItem("role");
-  const isAllowed = <boolean>(state.url.startsWith("/admin") ? role  === 'admin': role === 'client');
+  let isAllowed = <boolean>(state.url.startsWith("/admin") ? role  === 'admin': role === 'client');
+  if(state.url.startsWith("/auth") && role != null){
+    isAllowed = true;
+  }
 
-  /* TODO: Uncomment before hosting/after testing! */
+
   if(!isAllowed) router.navigateByUrl("/auth/login").then(r => toastrService.error("Login before trying again!"));
   console.log(isAllowed);
   return isAllowed;
