@@ -44,8 +44,7 @@ export const authStore =
           patchState(store, {isAuthenticated:false, email: ''});
           toastrService.info("You've been logged out");
           localStorage.removeItem("role");
-          console.log("Role after logout: " + localStorage.getItem("role"));
-          await router.navigateByUrl('/auth/admin/login');
+          await router.navigateByUrl('/auth/login');
         }
         catch (exception: any){
           toastrService.error("Unable to logout");
