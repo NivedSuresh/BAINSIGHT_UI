@@ -64,12 +64,12 @@ export class CustomSidenavComponent {
     },
     {
       route: 'wallet',
-      icon: 'wallet',
+      icon: 'paid',
       label: 'Wallet'
     },
     {
       route: 'orders',
-      icon: 'paid',
+      icon: 'wallet',
       label: 'Orders'
     }
   ]);
