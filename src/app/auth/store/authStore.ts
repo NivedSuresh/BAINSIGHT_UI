@@ -38,15 +38,17 @@ export const authStore =
       }},
 
       async onLogout(){
-        try{ await authService.logoutUser(); }
+        try{
+          await authService.logoutUser();
+          patchState(store, {isAuthenticated:false, email: ''});
+          toastrService.info("You've been logged out");
+          localStorage.removeItem("role");
+          await router.navigateByUrl('/auth/admin/login');
+        }
         catch (exception: any){
           toastrService.error("Unable to logout");
           return;
         }
-
-        patchState(store, {isAuthenticated:false, email: ''});
-        toastrService.info("You've been logged out");
-        await router.navigateByUrl('/auth/admin/login');
       },
 
 
