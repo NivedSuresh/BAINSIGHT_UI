@@ -50,7 +50,7 @@
 
       <ng-container matColumnDef="symbol">
         <th style="text-align: center" mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td style="text-align: center"
+        <td style="text-align: center; cursor:pointer"
           mat-cell *matCellDef="let element"
           (click)="routeToHistory(element.symbol)"
         >
@@ -60,32 +60,32 @@
 
       <ng-container matColumnDef="low">
         <th style="text-align: center" mat-header-cell *matHeaderCellDef> Low </th>
-        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.low}} </td>
+        <td (click)="routeToHistory(element.symbol)" style="text-align: center; cursor:pointer" mat-cell *matCellDef="let element"> ₹{{element.low}} </td>
       </ng-container>
 
       <ng-container matColumnDef="high">
         <th style="text-align: center" mat-header-cell *matHeaderCellDef> High </th>
-        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.high}} </td>
+        <td (click)="routeToHistory(element.symbol)" style="text-align: center; cursor:pointer" mat-cell *matCellDef="let element"> ₹{{element.high}} </td>
       </ng-container>
 
       <ng-container matColumnDef="open">
         <th style="text-align: center" mat-header-cell *matHeaderCellDef> Open </th>
-        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.open}} </td>
+        <td (click)="routeToHistory(element.symbol)" style="text-align: center; cursor:pointer" mat-cell *matCellDef="let element"> ₹{{element.open}} </td>
       </ng-container>
 
       <ng-container matColumnDef="close">
         <th style="text-align: center" mat-header-cell *matHeaderCellDef> Close </th>
-        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.close}} </td>
+        <td (click)="routeToHistory(element.symbol)" style="text-align: center; cursor:pointer"mat-cell *matCellDef="let element"> ₹{{element.close}} </td>
       </ng-container>
 
       <ng-container matColumnDef="volume">
         <th style="text-align: center" mat-header-cell *matHeaderCellDef> Volume </th>
-        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.volume}} </td>
+        <td (click)="routeToHistory(element.symbol)" style="text-align: center; cursor:pointer" mat-cell *matCellDef="let element"> {{element.volume}} </td>
       </ng-container>
 
       <ng-container matColumnDef="change" >
-        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Change </th>
-        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.change}} </td>
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Change (Minute) </th>
+        <td (click)="routeToHistory(element.symbol)" style="text-align: center; cursor:pointer" mat-cell *matCellDef="let element"> ₹{{element.change}} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">

@@ -1,9 +1,8 @@
 <div>
   <dx-chart id="chart"
-            [title]="symbol + ': ₹' + price"
+            [title]="symbol +  price"
             [dataSource]="candles"
   >
-
     <dxi-series [name]="symbol" openValueField="open" highValueField="high" lowValueField="low" closeValueField="close">
       <dxo-reduction color="red"></dxo-reduction>
     </dxi-series>
@@ -40,5 +39,58 @@
     </div>
   </mat-button-toggle-group>
 </div>
+
+<!-- stock-table.component.html -->
+<div>
+  <h2 style="text-align: center">Meta</h2>
+  <table>
+    <tr>
+      <th>Symbol</th>
+      <td>{{ (stick |async)?.symbol }}</td>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <td>{{ (stick |async)?.timeStamp }}</td>
+    </tr>
+    <tr>
+      <th>Open</th>
+      <td>₹{{ (stick |async)?.open }}</td>
+    </tr>
+    <tr>
+      <th>High</th>
+      <td>₹{{ (stick |async)?.high }}</td>
+    </tr>
+    <tr>
+      <th>Close</th>
+      <td>₹{{ (stick |async)?.close }}</td>
+    </tr>
+    <tr>
+      <th>Low</th>
+      <td>₹{{ (stick |async)?.low }}</td>
+    </tr>
+    <tr>
+      <th>Change Last Minute</th>
+      <td>₹{{ (stick |async)?.change }}</td>
+    </tr>
+    <tr>
+      <th>Volume</th>
+      <td>{{ (stick |async)?.volume }}</td>
+    </tr>
+  </table>
+
+  <h3 style="text-align: center">Exchange Prices</h3>
+  <table>
+    <tr>
+      <th>Exchange</th>
+      <th>Last Traded Price</th>
+    </tr>
+    <tr *ngFor="let price of (stick |async)?.exchangePrices">
+      <td>{{ price.exchange }}</td>
+      <td>₹{{ price.lastTradedPrice }}</td>
+    </tr>
+  </table>
+</div>
+
+
 
 

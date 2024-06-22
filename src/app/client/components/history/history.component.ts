@@ -9,7 +9,7 @@ import {MatAnchor} from "@angular/material/button";
 import {URI} from "../../../shared/constants/bainsight.strings";
 import {StompService} from "../../../shared/stomp/stomp.service";
 import {rxStompServiceFactory} from "../../../shared/stomp/rx-stomp-service-factory";
-import {JsonPipe} from "@angular/common";
+import {AsyncPipe, JsonPipe, NgForOf} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {PlaceOrderComponent} from "../place-order/place-order.component";
 
@@ -20,7 +20,9 @@ import {PlaceOrderComponent} from "../place-order/place-order.component";
     DevExtremeModule,
     MatButtonToggleGroup,
     MatAnchor,
-    JsonPipe
+    JsonPipe,
+    NgForOf,
+    AsyncPipe
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
@@ -40,26 +42,27 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
 
   constructor(historyService:HistoryService,
-              private route: ActivatedRoute,
-              private matDialog: MatDialog) {
-
+              private activeRoute: ActivatedRoute,
+              private matDialog: MatDialog)
+  {
     this.historyService = historyService;
     this.stompService = rxStompServiceFactory();
     this.symbol = '';
     this.timeSpace = '';
     this.candles = [];
     this.eventSource = null;
-
   }
 
 
   ngOnInit(): void {
-    this.route.url.subscribe(value => {
+
+    this.activeRoute.url.subscribe(value => {
 
       this.symbol = value[1].path.toUpperCase();
       this.timeSpace = value[2].path;
 
       this.fetchSymbolHistoryOnInIt(this.symbol, this.timeSpace);
+      
       this.historyService.getStickFromServer(this.symbol);
 
       this.subscribeToLiveUpdates();
@@ -70,7 +73,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.clearEventSource();
     this.historyService.unsubscribeAll();
-    this.price = '';
   }
 
   clearEventSource(){
@@ -92,7 +94,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.stompService.unsubscribeAll();
     this.clearEventSource();
 
-    this.route.url.subscribe(value => {
+    this.activeRoute.url.subscribe(value => {
       this.historyService.route(value[1].path.toUpperCase(), timeSpace);
     });
 
@@ -114,13 +116,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   }
 
   get price(): string {
-    return this.historyService.getStick?.exchangePrices[0]?.lastTradedPrice ?
-      `: ${this.historyService.getStick.exchangePrices[0].lastTradedPrice}`
-      : '';
-  }
-
-  set price(val: string){
-    this.price = val;
+    return this.historyService.getPrice;
   }
 
 
@@ -129,6 +125,9 @@ export class HistoryComponent implements OnInit, OnDestroy {
   }
 
 
+  get stick(){
+    return this.historyService.stick$;
+  }
 
   protected onBuy(){
     this.matDialog.open(PlaceOrderComponent,
