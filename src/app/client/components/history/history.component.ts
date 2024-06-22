@@ -39,7 +39,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
 
 
-
   constructor(historyService:HistoryService,
               private route: ActivatedRoute,
               private matDialog: MatDialog) {
@@ -71,6 +70,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.clearEventSource();
     this.historyService.unsubscribeAll();
+    this.price = '';
   }
 
   clearEventSource(){
@@ -118,6 +118,11 @@ export class HistoryComponent implements OnInit, OnDestroy {
       `: ${this.historyService.getStick.exchangePrices[0].lastTradedPrice}`
       : '';
   }
+
+  set price(val: string){
+    this.price = val;
+  }
+
 
   private subscribeToLiveUpdates() {
     this.historyService.subscribeToLiveUpdates(this.symbol);

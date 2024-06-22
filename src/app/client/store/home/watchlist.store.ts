@@ -107,16 +107,41 @@ export const watchlistStore =
         }
         catch (err: any)
         {
-          console.log(err)
           toastrService.error(err?.error?.message);
         }
       },
 
       emptySticks(){
         const dto = store.watchlistDto;
-        const newDto :WatchlistDto = {watchlistId: 0, sticks: [], bainsightPage: {page: 1, next: false, prev: false}, watchlistName: ''};
+        const newDto :WatchlistDto = {watchlistId: 0, sticks: [], bainsightPage: {page: 1, next: false, prev: false}, watchlistName: '', pinned: false};
         patchState(store, {watchlistDto: newDto});
+      },
+
+      async removeSymbol(symbol: string){
+
+        const dto = store.watchlistDto();
+
+        const status = await watchlistService.removeSymbol(symbol, dto.watchlistId);
+
+        if(!status) return;
+
+
+        const sticks = dto.sticks;
+        dto.sticks = sticks.filter(stick => stick.symbol !== symbol);
+
+        console.log(dto.sticks.length)
+        patchState(store, {watchlistDto: dto});
+      },
+
+      async pinWatchlist(){
+        const status = await watchlistService.pinWatchlist(store.watchlistDto().watchlistId);
+        if(status){
+          const watchlistDto = store.watchlistDto();
+          watchlistDto.pinned = true;
+          patchState(store, {watchlistDto: watchlistDto});
+        }
       }
+
 
   })),
 )

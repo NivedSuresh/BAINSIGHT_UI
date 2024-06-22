@@ -15,3 +15,29 @@ body, html{
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* styles.scss */
+.swal2-popup {
+  background-color: #333;  /* Custom background color for the dialog */
+}
+
+.swal2-title {
+  color: #fff;  /* Custom text color for the title */
+}
+
+.swal2-content {
+  color: #ddd;  /* Custom text color for the content */
+}
+
+
+.zoom-in {
+  -webkit-box-shadow: 0 0 1px 3px #000 inset;
+  -moz-box-shadow: 0 0 1px 3px #000 inset;
+  border: #efefef 2px solid;
+  box-shadow: 10px 10px 18px #cccccc;
+  transform: scale(1.10);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adding transitions */
+}
+
+

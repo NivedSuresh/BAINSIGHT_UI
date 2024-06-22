@@ -1,15 +1,25 @@
 <div *ngIf="!watchlistDto().watchlistName" style="height: 30vh;" class="flex justify-content-center align-items-center">
-  <h3 (click)="routeToWatchlist()" style="cursor: pointer">Create a watchlist +</h3>
+  <h2 (click)="routeToWatchlist()" style="cursor: pointer">Create a watchlist +</h2>
 </div>
+
+<div (click)="routeToWatchlist()" style="text-align: center; cursor: pointer" *ngIf="watchlistDto() && !watchlistDto().watchlistName" class="flex justify-content-center align-items-center">
+  You haven't created a watchlist yet, please create one and add
+  the required symbols to start listening to live Market Updates.
+  <br><br>
+  Available Symbols: AAPL, MSFT, GOOGL,
+  TSLA, NVDA, NFLX
+</div>
+
 <div>
   <h3 class="mt-5 flex justify-content-center">{{ watchlistDto().watchlistName }}</h3>
 
-  <div class="container responsive-grid" style="cursor: pointer">
+  <div class="container responsive-grid" style="cursor: pointer" *ngIf="watchlistDto() && watchlistDto().sticks;">
     <mat-card
       *ngFor="let stick of watchlistDto().sticks"
       class="m-2"
       style="width:100%; background-color: #1f1d1d"
       (click)="routeToHistory(stick.symbol)"
+      zoomInOut
     >
 
       <mat-card-header>
@@ -47,6 +57,16 @@
     </mat-card>
 
   </div>
+<!--  <ng-template #note>-->
+    <div *ngIf="watchlistDto().watchlistName && watchlistDto().sticks.length == 0" style="height: 80%" class="flex justify-content-center align-items-center">
+      <h3 style="text-align: center">
+        Please Add to List
+        <br>
+        Available Symbols: AAPL, MSFT, GOOGL,
+        TSLA, NVDA, NFLX
+      </h3>
+    </div>
+<!--  </ng-template>-->
 
   <div class="flex justify-content-end mr-5">
     <small (click)="fetchPage(watchlistDto().bainsightPage.page - 1)" style="cursor: pointer" *ngIf="watchlistDto().bainsightPage?.prev">prev</small>

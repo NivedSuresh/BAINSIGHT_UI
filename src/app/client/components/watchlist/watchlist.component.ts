@@ -21,13 +21,14 @@ import {StompService} from "../../../shared/stomp/stomp.service";
 import {rxStompServiceFactory} from "../../../shared/stomp/rx-stomp-service-factory";
 import {MatDialog} from "@angular/material/dialog";
 import {WatchlistCreateDialog} from "../../../shared/components/cw-dialog-body/watchlist-create-dialog.component";
-import {MatAnchor} from "@angular/material/button";
+import {MatAnchor, MatButton, MatIconButton} from "@angular/material/button";
 import {MatSelectionList} from "@angular/material/list";
 import {MatFormField, MatLabel, MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {AwDialogBodyComponent} from "../../../shared/components/aw-dialog-body/aw-dialog-body.component";
 import {HistoryService} from "../../services/history/history.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'watchlist',
@@ -56,7 +57,9 @@ import {HistoryService} from "../../services/history/history.service";
     MatFormField,
     FormsModule,
     MatInput,
-    JsonPipe
+    JsonPipe,
+    MatIconButton,
+    MatButton
   ],
   templateUrl: './watchlist.component.html',
   styleUrl: './watchlist.component.css'
@@ -70,7 +73,7 @@ export class WatchlistComponent implements OnDestroy{
   tags: Signal<string[]>;
 
   datasource: Signal<MatTableDataSource<CandleStick>>;
-  displayedColumns: string[] = ['symbol', 'low', 'high', 'open', 'close', 'volume', 'change'];
+  displayedColumns: string[] = ['symbol', 'low', 'high', 'open', 'close', 'volume', 'change', 'action'];
 
   constructor(
     private matDialog: MatDialog,
@@ -130,4 +133,57 @@ export class WatchlistComponent implements OnDestroy{
     this.stompService.unsubscribeAll();
     this.watchlistStore.emptySticks();
   }
+
+  async trashSymbol(symbol: string) {
+    if(!symbol) return;
+    await this.watchlistStore.removeSymbol(symbol);
+  }
+
+
+
+
+
+  async pinWatchlist() {
+    const confirmed = await Swal.fire({
+      title: 'Are you sure?',
+      html: '<span style="color: #fff;">Do you want to pin this watchlist? If pinned, this watchlist will be loaded on the home screen.</span>',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#2d2f2d',  // Custom color for confirm button (green)
+      cancelButtonColor: '#2d2f2d',   // Custom color for cancel button (red)
+      confirmButtonText: 'Yes, pin it!',
+      customClass: {
+        popup: 'swal2-popup',        // Custom class for popup (dialog)
+        title: 'swal2-title'       // Custom class for title
+      }
+    });
+
+    if (confirmed.isConfirmed) {
+      try {
+        await this.watchlistStore.pinWatchlist(); // Assuming this method performs the pin action
+        await Swal.fire({
+          icon: 'success',
+          title: 'Pinned!',
+          text: 'The watchlist has been pinned.',
+          customClass: {
+            popup: 'swal2-popup'  // Apply predefined class for popup (dialog)
+          }
+        });
+        // Optionally, update component state or perform further actions after pinning
+      } catch (error) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to pin the watchlist.',
+          customClass: {
+            popup: 'swal2-popup'  // Apply predefined class for popup (dialog)
+          }
+        });
+        console.error('Failed to pin watchlist:', error);
+      }
+    } else {
+      return;
+    }
+  }
+
 }

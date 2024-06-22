@@ -11,6 +11,7 @@ export const watchlistState : PinnedWatchState = {
     watchlistName: '',
     sticks: [],
     bainsightPage: {page: 1, next: false, prev: false},
+    pinned: false
   },
   tags: [],
   message: '',

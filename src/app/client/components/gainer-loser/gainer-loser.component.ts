@@ -6,6 +6,7 @@ import {NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {MockService} from "../../../shared/service/mock.service";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import {HistoryService} from "../../services/history/history.service";
+import {ZoomInOutDirective} from "../../../shared/directives/zoom-in-out.directive";
 
 
 export interface LoserGainer {
@@ -25,7 +26,8 @@ export interface LoserGainer {
     MatCardHeader,
     NgOptimizedImage,
     NgStyle,
-    SlickCarouselModule
+    SlickCarouselModule,
+    ZoomInOutDirective
   ],
   templateUrl: './gainer-loser.component.html',
   styleUrl: './gainer-loser.component.css'

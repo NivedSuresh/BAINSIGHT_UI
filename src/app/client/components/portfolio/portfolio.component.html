@@ -21,7 +21,7 @@
 
       <ng-container matColumnDef="Invested Amount">
         <th mat-header-cell *matHeaderCellDef> Invested Amount </th>
-        <td mat-cell *matCellDef="let element"> {{element.investedAmount}} </td>
+        <td mat-cell *matCellDef="let element"> ₹{{element.investedAmount}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Sold Amount">
@@ -67,6 +67,6 @@
 
 <ng-template #noSymbols>
   <div style="height: 80vh;" class="flex justify-content-center align-items-center">
-    <h2 style="text-align: center">It's empty in here.</h2>
+    <h2 style="text-align: center">Your portfolio is empty. Start making orders.</h2>
   </div>
 </ng-template>

@@ -35,11 +35,7 @@ import {DxChartModule} from "devextreme-angular";
 })
 export class AppComponent {
 
-  /*
-  * TODO: Add route guards for each and every endpoint!
-  * */
 
-  isAuthenticated: boolean = !!localStorage.getItem("role");
   sidebarCollapsed = signal(true);
   sidenavWidth = computed(() => this.sidebarCollapsed() ? '57px' :'180px');
   authStore = inject(authStore);
@@ -48,4 +44,5 @@ export class AppComponent {
     await this.authStore.onLogout();
   }
 
+  protected readonly localStorage = localStorage;
 }

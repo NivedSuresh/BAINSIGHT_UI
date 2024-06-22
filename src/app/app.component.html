@@ -4,7 +4,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <a mat-button
-      *ngIf="isAuthenticated"
+      *ngIf="!!localStorage.getItem('role')"
       style="font-size: 15px; margin-right: 10px; color: #9b1e1e"
        (click)="logout()"
     >

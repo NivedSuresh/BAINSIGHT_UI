@@ -17,6 +17,7 @@ import {MatButton} from "@angular/material/button";
 import {WatchlistDto} from "../../../shared/models/watchlist.model";
 import {HistoryService} from "../../services/history/history.service";
 import {Router} from "@angular/router";
+import {ZoomInOutDirective} from "../../../shared/directives/zoom-in-out.directive";
 
 
 @Component({
@@ -34,7 +35,8 @@ import {Router} from "@angular/router";
     MatCardActions,
     MatButton,
     NgStyle,
-    NgIf
+    NgIf,
+    ZoomInOutDirective
   ],
   templateUrl: './pinned-watchlist.component.html',
   styleUrl: './pinned-watchlist.component.css'

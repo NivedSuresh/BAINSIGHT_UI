@@ -1,5 +1,7 @@
 
 
+
+
 <div class="flex justify-content-between">
   <form>
     <mat-form-field>
@@ -13,6 +15,14 @@
 
   <div class="flex justify-content-end">
 
+    <a
+      *ngIf="watchlistDto().watchlistName && !watchlistDto().pinned"
+      mat-raised-button class="cursor-pointer m-1"
+      (click)="pinWatchlist()"
+    >
+      Pin {{watchlistDto().watchlistName}}📄
+    </a>
+
     <a mat-raised-button class="cursor-pointer m-1"
        (click)="onCreateWatchlist()"
     >
@@ -25,23 +35,22 @@
     >
       Add to list +
     </a>
+
   </div>
 
 </div>
 
 
 
-<!--<mat-card-header class="mb-2 flex justify-content-center">-->
-<!--  Tag: {{ watchlistDto().watchlistName }}-->
-<!--</mat-card-header>-->
-<mat-card style="background-color: #181717" *ngIf=" watchlistDto().sticks && watchlistDto().sticks.length > 0">
+
+<mat-card style="background-color: #181717" *ngIf=" watchlistDto().sticks && watchlistDto().sticks.length > 0; else note">
 
   <mat-card-content>
     <table mat-table [dataSource]="datasource()" style="background-color: #181717">
 
       <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Symbol </th>
+        <td style="text-align: center"
           mat-cell *matCellDef="let element"
           (click)="routeToHistory(element.symbol)"
         >
@@ -50,34 +59,42 @@
       </ng-container>
 
       <ng-container matColumnDef="low">
-        <th mat-header-cell *matHeaderCellDef> Low </th>
-        <td mat-cell *matCellDef="let element"> {{element.low}} </td>
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Low </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.low}} </td>
       </ng-container>
 
       <ng-container matColumnDef="high">
-        <th mat-header-cell *matHeaderCellDef> High </th>
-        <td mat-cell *matCellDef="let element"> {{element.high}} </td>
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> High </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.high}} </td>
       </ng-container>
 
       <ng-container matColumnDef="open">
-        <th mat-header-cell *matHeaderCellDef> Open </th>
-        <td mat-cell *matCellDef="let element"> {{element.open}} </td>
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Open </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.open}} </td>
       </ng-container>
 
       <ng-container matColumnDef="close">
-        <th mat-header-cell *matHeaderCellDef> Close </th>
-        <td mat-cell *matCellDef="let element"> {{element.close}} </td>
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Close </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.close}} </td>
       </ng-container>
 
       <ng-container matColumnDef="volume">
-        <th mat-header-cell *matHeaderCellDef> Volume </th>
-        <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Volume </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.volume}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="change">
-        <th mat-header-cell *matHeaderCellDef> Change </th>
-        <td mat-cell *matCellDef="let element"> {{element.change}} </td>
+      <ng-container matColumnDef="change" >
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Change </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element"> {{element.change}} </td>
       </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th style="text-align: center" mat-header-cell *matHeaderCellDef> Action </th>
+        <td style="text-align: center" mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="trashSymbol(element.symbol)">trash</button>
+        </td>
+      </ng-container>
+
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -90,5 +107,21 @@
   <small (click)="fetchPage(watchlistDto().bainsightPage.page - 1)" style="cursor: pointer" *ngIf="watchlistDto()?.bainsightPage?.prev">prev</small>
   <small (click)="fetchPage(watchlistDto().bainsightPage.page + 1)" class="ml-2" style="cursor: pointer" *ngIf="watchlistDto()?.bainsightPage?.next">next</small>
 </div>
+
+
+<ng-template #note>
+  <div *ngIf="watchlistDto() && !watchlistDto().watchlistName" style="height: 80%" class="flex justify-content-center align-items-center">
+    You haven't created a watchlist yet, please create one and add
+    the required symbols to start listening to live Market Updates.
+  </div>
+  <div *ngIf="watchlistDto().watchlistName && watchlistDto().sticks.length == 0" style="height: 80%" class="flex justify-content-center align-items-center">
+    <h3 style="text-align: center">
+      Please Add to List
+      <br>
+      Available Symbols: AAPL, MSFT, GOOGL,
+      TSLA, NVDA, NFLX
+    </h3>
+  </div>
+</ng-template>
 
 

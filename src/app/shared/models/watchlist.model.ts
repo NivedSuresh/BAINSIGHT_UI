@@ -11,7 +11,8 @@ export type WatchlistDto = {
   watchlistId: number,
   watchlistName: string,
   sticks: CandleStick[],
-  bainsightPage: Page
+  bainsightPage: Page,
+  pinned: boolean
 }
 
 export type WatchlistMeta = {

@@ -25,11 +25,6 @@ export const clientRoutes: Route[] = [
     canActivate: [canActivateGuard]
   },
   {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [canActivateGuard]
-  },
-  {
     path: 'wallet',
     component: WalletComponent,
     canActivate: [canActivateGuard]
